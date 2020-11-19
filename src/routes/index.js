@@ -4,11 +4,11 @@ const fetch = require("node-fetch");
 const Router = express.Router();
 
 //const tokenGenerate = getToken();
-const token = "eyJraWQiOiIyMDIwMTAyMjE4MzMiLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC01NTAwMDZHUTQwIiwiaWQiOiJJQk1pZC01NTAwMDZHUTQwIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiMmY2MWZhZmItNGQ1Ny00ZDI4LWFkMGEtYTBmZmViYjRjZTc5IiwiaWRlbnRpZmllciI6IjU1MDAwNkdRNDAiLCJnaXZlbl9uYW1lIjoiRGllZ28gTm9yZWwiLCJmYW1pbHlfbmFtZSI6IlZlZ2EgTWVqaWEiLCJuYW1lIjoiRGllZ28gTm9yZWwgVmVnYSBNZWppYSIsImVtYWlsIjoiZGllZ28udmVnYUB1bmFzLmVkdS5wZSIsInN1YiI6ImRpZWdvLnZlZ2FAdW5hcy5lZHUucGUiLCJhY2NvdW50Ijp7InZhbGlkIjp0cnVlLCJic3MiOiIyNmFhOTYzOTBhMTI0NWU4OWNhY2I4MzI2NDJjN2M2YyIsImZyb3plbiI6dHJ1ZX0sImlhdCI6MTYwNTU2MzA3OSwiZXhwIjoxNjA1NTY2Njc5LCJpc3MiOiJodHRwczovL2lhbS5ibHVlbWl4Lm5ldC9pZGVudGl0eSIsImdyYW50X3R5cGUiOiJ1cm46aWJtOnBhcmFtczpvYXV0aDpncmFudC10eXBlOmFwaWtleSIsInNjb3BlIjoiaWJtIG9wZW5pZCIsImNsaWVudF9pZCI6ImRlZmF1bHQiLCJhY3IiOjEsImFtciI6WyJwd2QiXX0.fsk0YPv4Kd9BByHVL2pO_YUEg62CCcBSFmepAr4gpMmMdbBx9j0iEdRZPvPhkYZwVIJrZR0W6sZUynuE-76Zdbbf5kDSWtjevLe9IhNfxBSDzeM3gAMyiu0ZXzvy7w5EQIPmacfc1B3quJvzKX2BjK8_dD6E6uZGDyP5gt6Nx8iM7W4ZRAYAdKcJNq-2VcHgPwIKP3nVkfe__QZLkllyfgqa8tuSCKPo6m9H-gah6Gt6WkIMenimJVnO-JAb8EhtvYwvEc0wPAAdbKoabX8LeaPqrB8XNssHSpO6ugQXhfJdPZqfLQzUpCx-qqhNHgiD1cGH8wu2PZkPd_LFoAetfg";
+const token = "eyJraWQiOiIyMDIwMTAyMjE4MzMiLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC01NTAwMDlEVEtIIiwiaWQiOiJJQk1pZC01NTAwMDlEVEtIIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiOTdlMjgxYjUtZTRkYS00M2U3LThmMWQtZjVlNzM0YThlOWE5IiwiaWRlbnRpZmllciI6IjU1MDAwOURUS0giLCJnaXZlbl9uYW1lIjoiRGllZ28gTm9yZWwiLCJmYW1pbHlfbmFtZSI6IlZlZ2EgTWVqaWEiLCJuYW1lIjoiRGllZ28gTm9yZWwgVmVnYSBNZWppYSIsImVtYWlsIjoiZGllZ28udm1lamlhQHVuYXMuZWR1LnBlIiwic3ViIjoiZGllZ28udm1lamlhQHVuYXMuZWR1LnBlIiwiYWNjb3VudCI6eyJ2YWxpZCI6dHJ1ZSwiYnNzIjoiODkyZTM0NGNhNGIxNDdhMTg2MWNkMjhlYTEwYjBhOWYiLCJmcm96ZW4iOnRydWV9LCJpYXQiOjE2MDU3Njg3MzMsImV4cCI6MTYwNTc3MjMzMywiaXNzIjoiaHR0cHM6Ly9pYW0uYmx1ZW1peC5uZXQvaWRlbnRpdHkiLCJncmFudF90eXBlIjoidXJuOmlibTpwYXJhbXM6b2F1dGg6Z3JhbnQtdHlwZTphcGlrZXkiLCJzY29wZSI6ImlibSBvcGVuaWQiLCJjbGllbnRfaWQiOiJkZWZhdWx0IiwiYWNyIjoxLCJhbXIiOlsicHdkIl19.ackV-TX_T4ysckBOduU3tOoXfWqFsYDe6RZsYO2omi3BqEahbowwf5x4eAylnjg9j8KOSxMQVYly1ArqOQglyi-ewAfnHRx9HbSV1IdiZzIXWYfQddWaoFf_yfYDWI-C8yIhvTnosMHBEk5QC4xxMdcCATX92JC9NOVCLDJ8xnFn_hoeRq2Gpj4IrEny357U7Ud2Pqth0oC5ykeRIlKsojixyLMJOjhM5BhnQOHzVBWYjCwhoZtFQgWHVONCbzMtshbLyPvWwsufU2kn4goOrhHpec5E-2SFHQAh-rrfiJgOSIdQQbFUdLzqhId3_FYeq6J-HoTBEYydI1MJysjKNA";
 
 
 Router.get("/", (req, res) => {
-  res.render("prediction");
+  res.render("index.ejs");
 });
 Router.post("/", (req, res) => {
   //const usuario = req.body;
@@ -50,7 +50,7 @@ Router.post("/", (req, res) => {
   const myHeaders = new fetch.Headers();
   myHeaders.append("authorization", `Bearer ${token}`);
   fetch(
-    "https://us-south.ml.cloud.ibm.com/ml/v4/deployments/1f9bb8db-3bfc-4b99-9cfa-92dff6945279/predictions?version=2020-11-11",
+    "https://us-south.ml.cloud.ibm.com/ml/v4/deployments/e9e6b04b-c69c-4a11-843a-30ddfca8d844/predictions?version=2020-10-29",
     {
       method: "POST",
       headers: myHeaders,
@@ -61,8 +61,24 @@ Router.post("/", (req, res) => {
     .then((json) => {
       //console.log(json)
       const valores = JSON.stringify(json);
-      console.log(valores);
-      res.send(valores)
+      
+
+      formatDataJS = JSON.parse(valores)
+      const element = formatDataJS.predictions[0].values[0];
+      //formatElement = JSON.parse(element);
+
+      if (element[0] == "F") {
+        res.render('noCalifica',formatDataJS)
+
+      }else{
+        res.render('califica',formatDataJS)
+        console.log(element)
+      }
+      
+
+      
+
+
     });
 });
 

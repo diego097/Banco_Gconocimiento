@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ('partials/head.ejs') %>
+</head>
+<body>
+    <%- include ('partials/navigation.ejs') %>
+
+    <h1>No califica </h1>
+    <table>
+        <% for(var i=0; i < formatDataJS.predictions.length; i++) { %>
+            <% for(var j=0; j < formatDataJS.predictions[i].fields.length; j++) { %>
+                
+                    <h1><%= formatDataJS.predictions[i].values[j] %></h1>
+                
+            <% } %>  
+        <% } %>
+    </table>
+     
+</body>
+</html>
